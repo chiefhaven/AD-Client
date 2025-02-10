@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>&nbsp; Dashboard</h1>
+    <h1 class="text-muted">&nbsp; Dashboard</h1>
 @stop
 
 @section('content')
@@ -13,26 +13,56 @@
                 <div class="col-lg-12">
                     <div class="row mt-2">
                         <div class="col-md-3">
-                            <a href="{{ route('employees') }}" style="text-decoration: none;">
-                            <x-adminlte-small-box title="Employees" text="{{ App\Models\Employee::get()->count() }}" theme="secondary" />
+                            <a href="{{ route('billing') }}" style="text-decoration: none;">
+                            <x-adminlte-small-box
+                                title="Billings"
+                                text="{{ App\Models\Billing::get()->count() }}"
+                                theme="light"
+                                icon="fas fa-coins small-icon "
+                                class="card"
+                                style="border: none"
+
+                                />
+                            </a>
+                        </div>
+
+                        <div class="col-md-3">
+                            <a href="{{ route('payrollsummary') }}" style="text-decoration: none;">
+                            <x-adminlte-small-box
+                                title="Payroll"
+                                text="{{ App\Models\Payroll::get()->count() }}"
+                                theme="light"
+                                icon="fas fa-receipt small-icon "
+                                class="card"
+                                style="border: none"
+                            />
                             </a>
                         </div>
 
                         <div class="col-md-3">
                             <a href="{{ route('leaveView') }}" style="text-decoration: none;">
-                            <x-adminlte-small-box title="Leaves" text="{{ App\Models\Leave::where('status', 'Pending')->get()->count() }}" theme="secondary" />
+                            <x-adminlte-small-box
+                                title="Leaves"
+                                text="{{ App\Models\Leave::where('status', 'Pending')->get()->count() }}"
+                                theme="light"
+                                icon="fas fa-sign-out-alt small-icon"
+                                class="card"
+                                style="border: none"
+                            />
                             </a>
                         </div>
 
-                         <div class="col-md-3">
-                            <a href="{{ route('payrollsummary') }}" style="text-decoration: none;">
-                            <x-adminlte-small-box title="Payroll" text="{{ App\Models\Payroll::get()->count() }}" theme="secondary" />
-                            </a>
-                        </div>
 
-                         <div class="col-md-3">
-                            <a href="{{ route('billing') }}" style="text-decoration: none;">
-                            <x-adminlte-small-box title="Billings" text="{{ App\Models\Billing::get()->count() }}" theme="secondary" />
+                        <div class="col-md-3">
+                            <a href="{{ route('employees') }}" style="text-decoration: none;">
+                            <x-adminlte-small-box
+                                title="Employees"
+                                text="{{ App\Models\Employee::get()->count() }}"
+                                theme="light"
+                                icon="fas fa-users small-icon"
+                                class="card"
+                                style="border: none"
+                                />
                             </a>
                         </div>
                     </div>
@@ -40,7 +70,7 @@
             </div>
         </div>
     </div>
-     <div class="row p-4">
+     <div class="row ">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-lg-12">
@@ -77,7 +107,7 @@
 
 @section('css')
     {{-- Add here extra stylesheets --}}
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/resources/css/app.css">
 @stop
 
 @section('js')

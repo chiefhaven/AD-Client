@@ -307,14 +307,14 @@ return [
         ],
         [
             'text' => 'Billings',
-            'url' => '/billings',
+            'url' => 'billings',
             'icon' => 'fa fa-fw fa-coins',
 
         ],
         [
             'text' => 'Leaves',
             'url' => '/leaves/leaveView',
-            'icon' => 'fa fa-fw fa-calendar',
+            'icon' => 'fa fa-fw fa-sign-out-alt',
 
             ],
 
