@@ -4,9 +4,39 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function attemptLogin(Request $request)
+    {
+        // Get credentials from request
+        $credentials = $this->credentials($request);
+
+        // Attempt login with additional condition
+        $user = \App\Models\User::where('email', $credentials['email'])->first();
+
+        if (!$user) {
+            return false;
+        }
+
+        // Check if client_id is not null
+        if (is_null($user->client_id)) {
+            return false;
+        }
+
+        // Proceed with login attempt
+        return Auth::attempt($credentials, $request->filled('remember'));
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        return redirect()->back()
+            ->withInput($request->only('email', 'remember'))
+            ->withErrors(['email' => 'Credentials do not match our records.']);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller

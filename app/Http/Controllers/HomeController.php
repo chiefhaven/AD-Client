@@ -31,9 +31,9 @@ class HomeController extends Controller
         $education_levels = Employee::select('education_level', DB::raw('count(*) as total'))
                     ->groupBy('education_level')
                     ->get();
-                    
+
         $monthly_billings = DB::table('billings')
-            ->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month, SUM(total_amount) as total')
+            ->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month, SUM(amount) as total')
             ->groupBy('month')
             ->orderBy('month', 'ASC')
             ->get();
@@ -41,5 +41,5 @@ class HomeController extends Controller
         // Pass the data to the view
         return view('home', compact('education_levels','monthly_billings'));
     }
-    
+
 }

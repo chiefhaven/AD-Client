@@ -5,7 +5,6 @@ use App\Livewire\Clients\UpdateClient;
 use App\Livewire\AddTaxRate;
 use App\Livewire\AddUser;
 use App\Livewire\Attendances;
-use App\Livewire\Leaves;
 use App\Livewire\Notifications;
 use App\Livewire\Payroll;
 use App\Livewire\Reports;
@@ -21,9 +20,7 @@ use App\Livewire\Employees\ViewEmployee;
 
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\LeaveController;
-use App\Http\Controllers\ReportController;
 use App\Http\Controllers\PayrollController;
-use App\Models\Leave;
 
 
 Auth::routes();
