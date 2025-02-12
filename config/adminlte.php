@@ -313,12 +313,18 @@ return [
         ],
         [
             'text' => 'Leaves',
-            'url' => '/leaves/leaveView',
+            'url' => '/leaves',
             'icon' => 'fa fa-fw fa-sign-out-alt',
 
-            ],
+        ],
+        [
+            'text' => 'Settings',
+            'url' => '/settings',
+            'icon' => 'fa fa-fw fa-cogs',
 
         ],
+
+    ],
 
 
     /*

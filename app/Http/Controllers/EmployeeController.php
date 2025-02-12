@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
@@ -13,7 +14,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('employees.employeeList');
+        $employees = Employee::where('client_id', Auth::user()->client_id)->get();
+        return view('employees.employees', compact('employees'));
     }
 
     /**

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Settings;
 use App\Http\Requests\StoreSettingsRequest;
 use App\Http\Requests\UpdateSettingsRequest;
+use App\Models\Client;
+use Illuminate\Support\Facades\Auth;
 
 class SettingsController extends Controller
 {
@@ -13,7 +15,9 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        //
+        $client = Client::find(Auth::user()->client_id);
+
+        return view('clientProfile', compact('client'));
     }
 
     /**

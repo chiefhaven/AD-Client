@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\Leave;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class LeaveController extends Controller
@@ -11,13 +13,17 @@ class LeaveController extends Controller
     public function index()
     {
 
-        return view('leaves.leaveView');
+        return view('leaves.leaves');
 
     }
 
     public function leavesData()
     {
-        $leaves = Leave::all();
+        $leaves = Leave::with('employee')
+        ->whereHas('employee', function ($query) {
+            $query->where('client_id', Auth::user()->client_id);
+        })
+        ->get();
 
         return response()->json($leaves, 200);
 

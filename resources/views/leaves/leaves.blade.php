@@ -4,7 +4,7 @@
 
 @section('content_header')
     <h1 class="text-muted">
-        Leave Management
+        Leaves
     </h1>
     @push('css')
 
@@ -22,7 +22,7 @@
 
 <!-- Vue app container for Leave View component -->
 <div id="app">
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-md-4">
             <!-- Total Requests Card -->
             <div class="card text-white bg-secondary mb-1">
@@ -68,81 +68,83 @@
 
     <!-- Data table -->
 
-    <div class="row mt-1">
-            <table id="leavesTable" class="display">
-                <thead>
-                    <tr>
-                        <th style="min-width: 5em; width: 5em">ID #</th>
-                        <th style="min-width: 10em; width: 10em">First Name</th>
-                        <th>Surname</th>
-                        <th style="min-width: 5em; width: 5em">Start Date</th>
-                        <th style="min-width: 10em; width: 10em">Type</th>
-                        <th>Status</th>
-                        <th style="min-width: 10em; width: 10em">Reason</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="leave in leaves" >
-                        <td>@{{ leave.employee_no }}</td>  <!-- Use Vue data properties, not Blade variables -->
-                        <td>@{{ leave.Name }}</td>
-                        <td>@{{ leave.Surname }}</td>
-                        <td>@{{ leave.start_date }}</td>
-                        <td>@{{ leave.Type }}</td>
-                        <td>@{{ leave.Status }}</td>
-                        <td>@{{ leave.Reason }}</td>
-                        <td>
-                            <div class="dropdown">
-                                <!-- Bootstrap Dropdown Toggle -->
-                                <button
-                                    class="btn btn-secondary dropdown-toggle"
-                                    type="button"
-                                    id="dropdownMenuButton"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    Actions
-                                </button>
+    <div class="row card mt-5 pt-5">
+        <table id="leavesTable" class="table table-bordered table-striped table-vcenter">
+            <thead>
+                <tr>
+                    <th style="min-width: 12em;">Employee</th>
+                    <th style="min-width: 8em;">Start Date</th>
+                    <th style="min-width: 12em;">Type</th>
+                    <th style="min-width: 12em;">Reason</th>
+                    <th style="min-width: 8em;">Status</th>
+                    <th style="min-width: 8em;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="leave in leaves" :key="leave.id">
+                    <!-- Employee Name -->
+                    <td>
+                        <span v-if="leave.employee">
+                            @{{ leave.employee.fname || '' }}
+                            @{{ leave.employee.mname || '' }}
+                            @{{ leave.employee.sname || '' }}
+                        </span>
+                        <span v-else class="text-muted">No Employee</span>
+                    </td>
 
-                                <!-- Bootstrap Dropdown Menu -->
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li>
-                                        <a
-                                            class="dropdown-item"
-                                            href="#"
-                                            @click.prevent="approveLeave(leave.id)"
-                                        >
-                                            Approve
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            class="dropdown-item"
-                                            href="#"
-                                            @click.prevent="disapproveLeave(leave.id)"
-                                        >
-                                            Disapprove
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            class="dropdown-item"
-                                            href="#"
-                                            data-toggle="modal"
-                                            data-target="#leaveDatail"
-                                            @click.prevent="viewLeaveDetails(leave)"
-                                            {{-- data-url="{{ route('leaveDetail', ['id' => $leave->id]) }}" --}}
-                                        >
-                                            View
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                    <!-- Start Date -->
+                    <td>@{{ leave.start_date }}</td>
 
+                    <!-- Leave Type -->
+                    <td>@{{ leave.type }}</td>
+
+                    <!-- Reason -->
+                    <td>@{{ leave.reason }}</td>
+
+                    <!-- Status with Badge -->
+                    <td>
+                        <span :class="{
+                            'badge bg-success': leave.status === 'Approved',
+                            'badge bg-danger': leave.status === 'Disapproved',
+                            'badge bg-warning text-dark': leave.status === 'Pending'
+                        }">
+                            @{{ leave.status }}
+                        </span>
+                    </td>
+
+                    <!-- Actions Dropdown -->
+                    <td>
+                        <div class="dropdown">
+                            <button
+                                class="btn btn-primary dropdown-toggle btn-sm"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item text-success" href="#" @click.prevent="approveLeave(leave.id)">
+                                        Approve
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="#" @click.prevent="disapproveLeave(leave.id)">
+                                        Disapprove
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-info" href="#" data-bs-toggle="modal" data-bs-target="#leaveDetail" @click.prevent="viewLeaveDetails(leave)">
+                                        View Details
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
     </div>
 
@@ -278,6 +280,7 @@
                     NProgress.start();
                     return axios.get(`/leaves/leavesData`)
                         .then(response => {
+                            console.log(response.data)
                             leaves.value = response.data;
                             initializeDataTable();
                         })

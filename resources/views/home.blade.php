@@ -3,11 +3,13 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1 class="text-muted">&nbsp; Dashboard</h1>
+    <div class="col-md-12 p-5">
+        <h2>Welcome <strong>{{ $client->client_name }}</strong></h2>
+    </div>
 @stop
 
 @section('content')
-    <div class="row p-4">
+    <div class="row">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-lg-12">
@@ -16,7 +18,7 @@
                             <a href="{{ route('billing') }}" style="text-decoration: none;">
                             <x-adminlte-small-box
                                 title="Billings"
-                                text="{{ App\Models\Billing::get()->count() }}"
+                                text="{{ $billingsCount }}"
                                 theme="light"
                                 icon="fas fa-coins small-icon "
                                 class="card"
@@ -30,7 +32,7 @@
                             <a href="{{ route('payrollsummary') }}" style="text-decoration: none;">
                             <x-adminlte-small-box
                                 title="Payroll"
-                                text="{{ App\Models\Payroll::get()->count() }}"
+                                text="{{ $payrollCount }}"
                                 theme="light"
                                 icon="fas fa-receipt small-icon "
                                 class="card"
@@ -40,10 +42,10 @@
                         </div>
 
                         <div class="col-md-3">
-                            <a href="{{ route('leaveView') }}" style="text-decoration: none;">
+                            <a href="{{ route('leaves') }}" style="text-decoration: none;">
                             <x-adminlte-small-box
                                 title="Leaves"
-                                text="{{ App\Models\Leave::where('status', 'Pending')->get()->count() }}"
+                                text="{{ $leaveCount }}"
                                 theme="light"
                                 icon="fas fa-sign-out-alt small-icon"
                                 class="card"
@@ -57,7 +59,7 @@
                             <a href="{{ route('employees') }}" style="text-decoration: none;">
                             <x-adminlte-small-box
                                 title="Employees"
-                                text="{{ App\Models\Employee::get()->count() }}"
+                                text="{{ $employeesCount }}"
                                 theme="light"
                                 icon="fas fa-users small-icon"
                                 class="card"
@@ -80,7 +82,7 @@
             </div>
         </div>
     </div>
-      <div class="row p-4">
+      <div class="row pt-4">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">

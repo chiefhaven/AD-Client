@@ -21,7 +21,7 @@ use App\Livewire\Employees\ViewEmployee;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\PayrollController;
-
+use App\Http\Controllers\SettingsController;
 
 Auth::routes();
 
@@ -70,7 +70,7 @@ Route::get('/billings/quotation/download{id}', [BillingController::class, 'downl
 
 
 Route::prefix('leaves')->group(function () {
-    Route::get('/leaveView', [LeaveController::class, 'index'])->name('leaveView');
+    Route::get('/', [LeaveController::class, 'index'])->name('leaves');
     Route::get('/leavesData', [LeaveController::class, 'leavesData'])->name('leavesData');
     Route::post('/mass-approve', [LeaveController::class, 'massApprove'])->name('mass-approve');
     Route::post('/mass-disapprove', [LeaveController::class, 'massDisapprove'])->name('mass-disapprove');
@@ -110,4 +110,4 @@ Route::get('/reports', Reports::class)->middleware(['auth']);
 Route::get('/users', UserList::class)->middleware(['auth']);
 Route::get('/add-user', AddUser::class)->middleware(['auth']);
 
-Route::get('/settings', Settings::class)->middleware(['auth']);
+Route::get('/settings', [SettingsController::class, 'index'])->middleware(['auth'])->name('settings');

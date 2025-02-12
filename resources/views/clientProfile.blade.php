@@ -2,7 +2,7 @@
 
 {{-- Extend and customize the browser title --}}
 
-@section('title', 'Employees')
+@section('title', 'Client Profile')
 
 {{-- Extend and customize the page content header --}}
 
@@ -21,15 +21,20 @@
     @endif
 @stop
 
+@section('plugins.Nprogress', true)
+
 {{-- Rename section content to content_body --}}
 
 @section('content')
-<div class="row">
-    <livewire:common.page-header pageTitle="Add Client"/>
-    <livewire:clients.addClient />
-    <x-livewire-alert::scripts />
+<div class="row" id="client_profile" v-cloak>
+    <livewire:common.page-header pageTitle="Your company profile"/>
+    <div class="col-md-12 pt-3">
+        {{ $client }}
+    </div>
 </div>
 @stop
+
+{{-- Create a common footer --}}
 
 @include('/components/layouts/footer_bottom')
 
@@ -38,9 +43,6 @@
 @push('js')
 <script>
 
-    $(document).ready(function() {
-        // Add your common script logic here...
-    });
 
 </script>
 @endpush
