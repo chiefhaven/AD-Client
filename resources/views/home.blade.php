@@ -17,8 +17,8 @@
                         <div class="col-md-3">
                             <a href="{{ route('billing') }}" style="text-decoration: none;">
                             <x-adminlte-small-box
-                                title="Billings"
-                                text="{{ $billingsCount }}"
+                                title="{{ $billingsCount }}"
+                                text="Billings"
                                 theme="light"
                                 icon="fas fa-coins small-icon "
                                 class="card"
@@ -31,8 +31,8 @@
                         <div class="col-md-3">
                             <a href="{{ route('payrollsummary') }}" style="text-decoration: none;">
                             <x-adminlte-small-box
-                                title="Payroll"
-                                text="{{ $payrollCount }}"
+                                title="{{ $payrollCount }}"
+                                text="Payrolls"
                                 theme="light"
                                 icon="fas fa-receipt small-icon "
                                 class="card"
@@ -44,8 +44,8 @@
                         <div class="col-md-3">
                             <a href="{{ route('leaves') }}" style="text-decoration: none;">
                             <x-adminlte-small-box
-                                title="Leaves"
-                                text="{{ $leaveCount }}"
+                                title="{{ $leaveCount }}"
+                                text="Leaves"
                                 theme="light"
                                 icon="fas fa-sign-out-alt small-icon"
                                 class="card"
@@ -58,8 +58,8 @@
                         <div class="col-md-3">
                             <a href="{{ route('employees') }}" style="text-decoration: none;">
                             <x-adminlte-small-box
-                                title="Employees"
-                                text="{{ $employeesCount }}"
+                                title="{{ $employeesCount }}"
+                                text="Employees"
                                 theme="light"
                                 icon="fas fa-users small-icon"
                                 class="card"
