@@ -16,7 +16,7 @@ class Payroll extends Model
 
 public $incrementing = false;
 protected $casts = ['id'=>'string'];
-protected $keyType = 'string';
+protected $keyType = 'string'; //haven
 
 protected static function boot()
     {
