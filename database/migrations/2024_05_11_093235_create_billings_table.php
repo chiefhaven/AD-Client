@@ -19,7 +19,7 @@ return new class extends Migration
             $table->uuid('client_id');
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->text('client_name');
-            $table->float('total_amount');
+            $table->float('amount');
             $table->float('discount');
             $table->float('paid_amount');
             $table->enum('bill_type', ['invoice', 'quotation']);

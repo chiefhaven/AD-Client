@@ -58,16 +58,6 @@
         </div>
     </div>
 
-    <!-- Mass Approve and Disapprove Buttons -->
-    {{-- <div class="row pt-4">
-        <div class="col-md-12 mb-3">
-            <button @click="massApprove" type="button" class="btn btn-success">Mass Approve</button>
-            <button @click="massDisapprove" type="button" class="btn btn-danger">Mass Disapprove</button>
-        </div>
-    </div> --}}
-
-    <!-- Data table -->
-
     <div class="row card mt-5 pt-5">
         <table id="leavesTable" class="table table-bordered table-striped table-vcenter">
             <thead>

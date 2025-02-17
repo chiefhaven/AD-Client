@@ -28,10 +28,10 @@
     <livewire:common.page-header pageTitle="Employees" buttonName="Add Employee"/>
     <div class="col-lg-12">
         <div class="card mb-3 p-4">
-            <p>All employees</p>
+
             <div class="table-responsive">
                 @if( !$employees->isEmpty())
-                    <table id="employeeTable" class="table table-bordered table-striped table-vcenter">
+                    <table id="employeeTable" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                             <th style="min-width: 150px;">Full name</th>
@@ -111,6 +111,7 @@
                     <p class="p-5">No employees yet for this client!</p>
                 @endif
             </div>
+
         </div>
     </div>
 </div>
@@ -123,10 +124,15 @@
 {{-- Add common Javascript/Jquery code --}}
 
 @push('js')
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <script>
 
     $(document).ready(function() {
         // Add your common script logic here...
+        $('#employeeTable').DataTable();
+
     });
 
 </script>
@@ -135,9 +141,15 @@
 {{-- Add common CSS customizations --}}
 
 @push('css')
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+
 <style type="text/css">
 
     {{-- You can add AdminLTE customizations here --}}
+
 
     .card {
         border-radius: none;
