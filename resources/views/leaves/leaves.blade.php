@@ -4,12 +4,12 @@
 
 @section('content_header')
     <h1 class="text-muted">
-        Leaves
+        Leave Management
     </h1>
     @push('css')
 
         <style>
-        #leaveDatail.modal {
+        #leaveDetail.modal {
             position: fixed !important;
         }
         </style>
@@ -126,7 +126,7 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item text-info" href="#" data-bs-toggle="modal" data-bs-target="#leaveDetail" @click.prevent="viewLeaveDetails(leave)">
-                                        View Details
+                                        View
                                     </a>
                                 </li>
                             </ul>
@@ -141,7 +141,7 @@
     {{-- modal code here --}}
     <div
     class="modal fade text-left"
-    id="leaveDatail"
+    id="leaveDetail"
     tabindex="-1"
     role="dialog"
     aria-hidden="true"
@@ -342,6 +342,9 @@
                         .catch(error => console.error(`Error in ${action}:`, error));
                 };
 
+                // console.log(bootstrap.Modal.VERSION);
+
+
                 const notification = ($text, $icon) =>{
                     Swal.fire({
                         toast: true,
@@ -456,6 +459,7 @@ const initializeDataTable = () => {
                 ordering: true,
                 autoWidth: false,
             });
+
         });
     } catch (error) {
         console.error('Error initializing DataTable:', error);
