@@ -16,13 +16,12 @@ class Payroll extends Model
 
 public $incrementing = false;
 protected $casts = ['id'=>'string'];
-protected $keyType = 'string'; //haven
+protected $keyType = 'string';
 
 protected static function boot()
     {
         parent::boot();
 
-        // Automatically generate a UUID when creating a model
         static::creating(function ($model) {
             if (empty($model->id)) {
                 $model->id = (string) Str::uuid();
