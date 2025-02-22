@@ -95,7 +95,7 @@
     <div class="col mt-3">
 
 
-     <table id="payrollTable" class="table table-striped table-bordered">
+    <table id="payrollTable" class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th>Employee ID</th>
@@ -110,31 +110,31 @@
             </tr>
         </thead>
         <tbody>
-    @foreach ($payrolls as $record)
-        <tr>
-            <td>EMP-{{ $record->employee->hiredate }}-{{ $record->employee->employee_no }}</td>
-            <td>{{ $record->employee->fname }}</td>
-            <td>{{ $record->employee->sname }}</td>
-            <td>{{ number_format($record->gross_pay, 2) }}</td>
-            <td>{{ number_format($record->net_pay, 2) }}</td>
-            <td>{{ number_format($record->other_deductions, 2) }}</td>
-            <td>{{ $record->payment_method }}</td>
-            <td>{{ $record->payment_status }}</td>
-            <td>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Actions
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#approve">Approve</a></li>
-                        <li><a class="dropdown-item" href="#disapprove">Disapprove</a></li>
-                    </ul>
-                </div>
-            </td>
-        </tr>
-    @endforeach
-</tbody>
+        @foreach ($payrolls as $record)
+            <tr>
+                <td>EMP-{{ $record->employee->hiredate }}-{{ $record->employee->employee_no }}</td>
+                <td>{{ $record->employee->fname }}</td>
+                <td>{{ $record->employee->sname }}</td>
+                <td>{{ number_format($record->gross_pay, 2) }}</td>
+                <td>{{ number_format($record->net_pay, 2) }}</td>
+                <td>{{ number_format($record->other_deductions, 2) }}</td>
+                <td>{{ $record->payment_method }}</td>
+                <td>{{ $record->payment_status }}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#approve">Approve</a></li>
+                            <li><a class="dropdown-item" href="#disapprove">Disapprove</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
 
     </table>
 </div>
