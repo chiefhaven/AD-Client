@@ -71,7 +71,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Pay Period</h5>
                     <p class="card-text">
-                        <strong>{{ \Carbon\Carbon::parse($latestPayroll->payment_date)->format('F Y') }}</strong>
+                        <strong>{{ \Carbon\Carbon::parse($latestPayroll->payroll_date)->format('F Y') }}</strong>
                     </p>
 
 
