@@ -17,7 +17,7 @@ public function index(Request $request)
     $payrolls = Payroll::select(
         DB::raw('DATE_FORMAT(payment_date, "%Y-%m") as period'),
         DB::raw('SUM(net_pay) as totalNetPay'),
-        DB::raw('MAX(payment_date) as date'), // Latest date in the period
+        DB::raw('MAX(payroll_date) as date'), // Latest date in the period
         DB::raw('COUNT(id) as recordCount'), // Count records per period
         DB::raw('MAX(payment_status) as status') // Latest status in the period
     )
