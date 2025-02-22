@@ -140,12 +140,12 @@
 
     {{-- modal code here --}}
     <div
-    class="modal fade text-left"
-    id="leaveDetail"
-    tabindex="-1"
-    role="dialog"
-    aria-hidden="true"
-    v-if="selectedLeave"
+        class="modal fade text-left"
+        id="leaveDetail"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+        v-show="selectedLeave"
     >
 
     <div class="modal-dialog modal-lg" role="document">
@@ -155,7 +155,7 @@
                 <button
                     type="button"
                     class="close"
-                    data-dismiss="modal"
+                    data-bs-dismiss="modal"
                     aria-label="Close"
                     @click="closeModal"
                     >
@@ -294,7 +294,7 @@
 
                 const viewLeaveDetails = (leave) => {
                 selectedLeave.value = leave; // Update the selected leave
-                // $('#leaveDatail').modal('show'); // Show the modal
+                $('#leaveDetail').modal('show'); // Show the modal
 
                 };
 
