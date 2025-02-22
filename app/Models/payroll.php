@@ -43,9 +43,9 @@ protected static function boot()
         'payment_status'
     ];
 
-   public function employee()
+    public function employees()
     {
-        return $this->belongsTo(Employee::class,'employee_id');
+        return $this->belongsToMany(Employee::class, "payroll_employee")->withPivot('salary', 'pay_period', 'earning_description', 'earning_amount', 'deduction_description', 'deduction_amount', 'payee', 'net_salary', 'total_paid');
     }
 
 

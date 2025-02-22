@@ -15,7 +15,7 @@ class LoginController extends Controller
         $credentials = $this->credentials($request);
 
         // Attempt login with additional condition
-        $user = \App\Models\User::where('email', $credentials['email'])->first();
+        $user = \App\Models\User::where('email', $credentials['email'])->where('client_id', "!=", null)->first();
 
         if (!$user) {
             return false;

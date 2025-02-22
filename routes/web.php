@@ -97,6 +97,11 @@ Route::get('/view-client/{id}', [ClientController::class, 'show'])->name('view-c
 Route::get('/update-client/{id}', UpdateClient::class)->name('update-employee')->middleware(['auth']);
 
 Route::get('/payroll', Payroll::class)->middleware(['auth']);
+Route::get('/export-payroll/{client}/{type}', [PayrollController::class, 'exportPayroll'])->name('export-payroll');
+Route::get('/view-payroll/{payroll}', [PayrollController::class, 'show'])->name('show-payroll');
+Route::get('/export-payroll/{client}/{type}', [PayrollController::class, 'exportPayroll'])->name('export-payroll');
+Route::post('/change-payroll-status', [PayrollController::class, 'status'])->name('change-payroll-status');
+Route::get('/view-employee-payroll/{employee}/{payroll}/{payslip}', [PayrollController::class, 'viewEmployeePayroll'])->name('viewEmployeePayroll');
 
 Route::get('/attendances', Attendances::class)->middleware(['auth']);
 
