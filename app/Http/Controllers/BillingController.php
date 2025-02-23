@@ -44,7 +44,7 @@ class BillingController extends Controller
         $bills = Billing::with('products', 'payments')->where('client_id', Auth::user()->client_id)->get();
 
         // Pass both billings and total to the view
-        return view('Billings.billing', compact('bills'));
+        return view('billings.billing', compact('bills'));
     }
 
 
