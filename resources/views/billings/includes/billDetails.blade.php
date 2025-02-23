@@ -5,7 +5,7 @@
                 <div class="col-md-4">
                     <table>
                         <tr>
-                            <th>Invoice No.:</th>
+                            <th>No.:</th>
                             <td>@{{ billData.invoice_number }}</td>
                         </tr>
                     </table>

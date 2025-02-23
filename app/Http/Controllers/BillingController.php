@@ -14,38 +14,38 @@ class BillingController extends Controller
      * Display a listing of the resource.
      */
    public function index()
-{
-    // // Fetch all billings with their related orders
-    // $billings = Billing::with(['orders'])->get();
+    {
+        // // Fetch all billings with their related orders
+        // $billings = Billing::with(['orders'])->get();
 
-    // // Initialize the total amount
-    // $total = 0;
+        // // Initialize the total amount
+        // $total = 0;
 
-    // // Calculate totals for each billing record
-    // foreach ($billings as $billing) {
-    //     $subtotal = $billing->orders->sum(function ($order) {
-    //         $itemTotal = $order->quantity * $order->rate;
+        // // Calculate totals for each billing record
+        // foreach ($billings as $billing) {
+        //     $subtotal = $billing->orders->sum(function ($order) {
+        //         $itemTotal = $order->quantity * $order->rate;
 
-    //         // Apply tax if available
-    //         if (isset($order->tax)) {
-    //             $itemTotal += ($itemTotal * ($order->tax / 100));
-    //         }
+        //         // Apply tax if available
+        //         if (isset($order->tax)) {
+        //             $itemTotal += ($itemTotal * ($order->tax / 100));
+        //         }
 
-    //         return $itemTotal;
-    //     });
+        //         return $itemTotal;
+        //     });
 
-    //     // Calculate total by applying discount
-    //     // $billing->total = $subtotal - ($subtotal * ($billing->discount / 100));
+        //     // Calculate total by applying discount
+        //     // $billing->total = $subtotal - ($subtotal * ($billing->discount / 100));
 
-    //     // Add the current billing's total to the overall total
-    //     $total += $billing->total;  // Calculate the overall total
-    // }
+        //     // Add the current billing's total to the overall total
+        //     $total += $billing->total;  // Calculate the overall total
+        // }
 
-    $bills = Billing::with('products', 'payments')->where('billing_type', 'invoice')->where('client_id', Auth::user()->client_id)->get();
+        $bills = Billing::with('products', 'payments')->where('client_id', Auth::user()->client_id)->get();
 
-    // Pass both billings and total to the view
-    return view('Billings.billing', compact('bills'));
-}
+        // Pass both billings and total to the view
+        return view('Billings.billing', compact('bills'));
+    }
 
 
     /**
@@ -61,35 +61,35 @@ class BillingController extends Controller
      */
     public function store(Request $request)
     {
+        //Only admins are allowed to create and store Bills
 
+        //     $billing = Billing::create([
+        //     'client_id' => $request->client_id,
+        //     'bill_type' => $request->bill_type,
+        //     'total_amount' => $request->total_amount,
+        //     'discount' => $request->discount,
+        //     'paid_amount' => $request->paid_amount,
+        //     'status' => $request->status,
+        //     'balance' => $request->balance,
+        //     'tax_amount' => $request->tax_amount,
+        //     'discount_type' => $request->discount_type,
+        //     'transaction_terms' => $request->transaction_terms,
+        //     'description' => $request->description,
+        //     'issue_date' => $request->issue_date,
+        //     'due_date' => $request->due_date,
+        // ]);
 
-        $billing = Billing::create([
-        'client_id' => $request->client_id,
-        'bill_type' => $request->bill_type,
-        'total_amount' => $request->total_amount,
-        'discount' => $request->discount,
-        'paid_amount' => $request->paid_amount,
-        'status' => $request->status,
-        'balance' => $request->balance,
-        'tax_amount' => $request->tax_amount,
-        'discount_type' => $request->discount_type,
-        'transaction_terms' => $request->transaction_terms,
-        'description' => $request->description,
-        'issue_date' => $request->issue_date,
-        'due_date' => $request->due_date,
-    ]);
+        // // Loop through products and create an order for each product
+        // foreach ($request->products as $product) {
+        //     $billing->orders()->create([
+        //         'product_id' => $product['id'],
+        //         'quantity' => $product['quantity'],
+        //         'rate' => $product['rate'],
+        //         'total' => $product['quantity'] * $product['price'],
+        //     ]);
+        // }
 
-    // Loop through products and create an order for each product
-    foreach ($request->products as $product) {
-        $billing->orders()->create([
-            'product_id' => $product['id'],
-            'quantity' => $product['quantity'],
-            'rate' => $product['rate'],
-            'total' => $product['quantity'] * $product['price'],
-        ]);
-    }
-
-    return redirect()->route('billings.index');
+        // return redirect()->route('billings.index');
 
     }
 

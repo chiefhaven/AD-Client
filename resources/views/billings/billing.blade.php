@@ -29,8 +29,8 @@
 @section('content')
 <div class="row" id="bills">
     <livewire:common.page-header pageTitle="Invoices"/>
-    @if (!$bills->isEmpty())
-        <div class="card mb-3 p-4">
+    @if (!$bills->where('billing_type', 'invoice')->isEmpty())
+        <div class="card mb-3 p-4 mb-5">
             <h4 class="pb-4">All invoices</h4>
             <div class="col-md-12">
                 <table id="billInvoicesTable" class="table table-responsive table-bordered table-striped table-vcenter display nowrap">
@@ -52,7 +52,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($bills as $bill)
+                        @foreach ($bills->where('billing_type', 'invoice') as $bill)
                             @php
                                 $balance = $bill->products->sum('pivot.total') - $bill->payments->sum('payment_amount');
                                 $paidAmount = $bill->payments->sum('payment_amount');
@@ -156,14 +156,114 @@
                 </table>
             </div>
         </div>
-
-        @include('billings/includes/viewBillModal')
-
     @else
         <div class="card col-12 text-center py-4">
             <p class="text-muted h5">No invoices yet!</p>
         </div>
     @endif
+    <livewire:common.page-header pageTitle="Quotations"/>
+
+    @if (!$bills->where('billing_type', 'quotation')->isEmpty())
+        <div class="col-md-12 card mb-3 p-4">
+            <h4 class="pb-4">All quotations</h4>
+                <table id="billQuotationTable" class="table table-responsive table-bordered table-striped table-vcenter display nowrap">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 100px;">Actions</th>
+                            <th style="min-width: 150px;">Date</th>
+                            <th style="min-width: 150px;">Due Date</th>
+                            <th style="min-width: 90px;">Status</th>
+                            <th style="min-width: 150px;">Invoice No.</th>
+                            <th class="text-end" style="min-width: 150px;">Items Qty</th>
+                            <th class="text-end" style="min-width: 150px;">Item Total</th>
+                            <th class="text-end" style="min-width: 150px;">Discount</th>
+                            <th class="text-end" style="min-width: 150px;">Tax</th>
+                            <th class="text-end" style="min-width: 150px;">Grand Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($bills->where('billing_type', 'quotation') as $bill)
+                            @php
+                                $balance = $bill->products->sum('pivot.total') - $bill->payments->sum('payment_amount');
+                                $paidAmount = $bill->payments->sum('payment_amount');
+                            @endphp
+                            <tr>
+                                <!-- Actions Dropdown -->
+                                <td class="text-center">
+                                    <div class="dropdown d-inline-block">
+                                        <button type="button" class="btn btn-default" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="d-sm-inline-block">Action</span>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-end p-0">
+                                            <div class="p-2">
+                                                <a class="dropdown-item nav-main-link" href="#" @click="viewBill('{{ $bill->id }}')">
+                                                    <i class="nav-main-link-icon fas fa-eye"></i> View
+                                                </a>
+                                                <a class="dropdown-item nav-main-link" href="#" @click="printBill('{{ $bill->id }}', 'print')">
+                                                    <i class="nav-main-link-icon fas fa-print"></i> Print Bill
+                                                </a>
+                                                <a class="dropdown-item nav-main-link" href="#" @click="printBill('{{ $bill->id }}', 'pdf')">
+                                                    <i class="nav-main-link-icon fas fa-file"></i> Export PDF
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <!-- Date -->
+                                <td>{{ \Carbon\Carbon::parse($bill->billing_date)->format('d F, Y') }}</td>
+
+                                <!-- Due Date -->
+                                <td>
+                                    @isset($bill->billing_due_date)
+                                        {{ \Carbon\Carbon::parse($bill->billing_due_date)->format('d F, Y') }}
+                                    @else
+                                        Coming Soon
+                                    @endisset
+                                </td>
+
+                                <!-- Status with Badge -->
+                                <td class="text-end">
+                                    <span class="badge
+                                        @if($bill->status == 'Pending') badge-warning
+                                        @elseif($bill->status == 'Paid') badge-success
+                                        @else badge-secondary
+                                        @endif">
+                                        {{ ucfirst($bill->status) }}
+                                    </span>
+                                </td>
+
+                                <!-- Invoice Number -->
+                                <td>{{ $bill->invoice_number }}</td>
+
+                                <!-- Items Quantity -->
+                                <td class="text-end">{{ $bill->products->sum('pivot.quantity') }}</td>
+
+                                <!-- Item Total -->
+                                <td class="text-end">
+                                    K{{ number_format($bill->products->sum(fn($product) => $product->pivot->price * $product->pivot->quantity), 2) }}
+                                </td>
+
+                                <!-- Discount -->
+                                <td class="text-end">K{{ number_format($bill->products->sum('pivot.item_discount'), 2) }}</td>
+
+                                <!-- Tax -->
+                                <td class="text-end">K{{ number_format($bill->products->sum('pivot.tax'), 2) }}</td>
+
+                                <!-- Grand Total -->
+                                <td class="text-end">K{{ number_format($bill->products->sum('pivot.total'), 2) }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+        </div>
+    @else
+        <div class="card col-12 text-center py-4">
+            <p class="text-muted h5">No quotations yet!</p>
+        </div>
+    @endif
+
+    @include('billings/includes/viewBillModal')
 </div>
 
 @push('js')
@@ -174,6 +274,17 @@
     <script>
         $(document).ready(function() {
             $('#billInvoicesTable').DataTable({
+                autoWidth: true,
+                responsive: true,
+                dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'excel', 'pdf', 'print'
+                    ],
+                scrollX: true,
+                scrollY: true,
+            });
+
+            $('#billQuotationTable').DataTable({
                 autoWidth: true,
                 responsive: true,
                 dom: 'Bfrtip',
