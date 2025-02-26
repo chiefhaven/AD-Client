@@ -25,7 +25,7 @@ class LeaveController extends Controller
         })
         ->get();
 
-        return response()->json($leaves, 200);
+        return response()->json( $leaves);
 
     }
 
