@@ -82,7 +82,7 @@ Route::prefix('leaves')->group(function () {
     Route::get('/leaveDetails/{id}', [LeaveController::class, 'show'])->name('leaveDetails')->middleware(['auth']);
 });
 
-
+ 
 
 
 
