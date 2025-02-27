@@ -18,7 +18,7 @@
                             <a href="{{ route('billing') }}" style="text-decoration: none;">
                             <x-adminlte-small-box
                                 title="{{ $billingsCount }}"
-                                text="Billings"
+                                text="Bills"
                                 theme="light"
                                 icon="fas fa-coins small-icon "
                                 class="card"

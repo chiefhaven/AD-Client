@@ -30,18 +30,21 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index')->middleware(['auth']);
 
-Route::get('/employees', [EmployeeController::class, 'index'])->name('employees');
+Route::get('/employees', [EmployeeController::class, 'index'])->name('employees')->middleware(['auth']);
 
 //payroll routes
-Route::get('/payrolls', [PayrollController::class, 'index'])->name('payrollsummary');
-Route::get('/payrolls/{period}', [PayrollController::class, 'show'])->name('payrolls.show');
+Route::get('/payrolls', [PayrollController::class, 'index'])->name('payrollsummary')->middleware(['auth']);
+Route::get('/payrolls/{period}', [PayrollController::class, 'show'])->name('payrolls.show')->middleware(['auth']);
 
 
-//Billing routes
-Route::get('/billings', [BillingController::class, 'index'])->name('billing');
-Route::get('/billings/view/{id}', [BillingController::class, 'show'])->name('billingView');
-Route::get('/billings/invoice/download{id}', [BillingController::class, 'downloadInvoice'])->name('download');
-Route::get('/billings/quotation/download{id}', [BillingController::class, 'downloadQuotation'])->name('download');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/billings', [BillingController::class, 'index'])->name('billing');
+    Route::get('/billings/view/{id}', [BillingController::class, 'show'])->name('billingView');
+    Route::get('/billings/invoice/download{id}', [BillingController::class, 'downloadInvoice']);
+    Route::get('/billings/quotation/download{id}', [BillingController::class, 'downloadQuotation']);
+    Route::get('/view-bill/{bill}', [BillingController::class, 'show'])->name('showBill');
+    Route::get('/print-bill/{bill}/{action}', [BillingController::class, 'billPdf'])->name('print-pdf');
+});
 
 
 //Leave routes
@@ -70,14 +73,13 @@ Route::get('/billings/quotation/download{id}', [BillingController::class, 'downl
 
 
 Route::prefix('leaves')->group(function () {
-    Route::get('/', [LeaveController::class, 'index'])->name('leaves');
-    Route::get('/leavesData', [LeaveController::class, 'leavesData'])->name('leavesData');
-    Route::post('/mass-approve', [LeaveController::class, 'massApprove'])->name('mass-approve');
-    Route::post('/mass-disapprove', [LeaveController::class, 'massDisapprove'])->name('mass-disapprove');
-    Route::post('/approve/{id}', [LeaveController::class, 'approve'])->name('leaves.approve');
-    Route::post('/disapprove/{id}', [LeaveController::class, 'disapproveLeave'])->name('leaves.disapprove');
-    Route::get('/leaveDetails/{id}', [LeaveController::class, 'show'])->name('leaveDetails');
-
+    Route::get('/', [LeaveController::class, 'index'])->name('leaves')->middleware(['auth']);
+    Route::get('/leavesData', [LeaveController::class, 'leavesData'])->name('leavesData')->middleware(['auth']);
+    Route::post('/mass-approve', [LeaveController::class, 'massApprove'])->name('mass-approve')->middleware(['auth']);
+    Route::post('/mass-disapprove', [LeaveController::class, 'massDisapprove'])->name('mass-disapprove')->middleware(['auth']);
+    Route::post('/approve/{id}', [LeaveController::class, 'approve'])->name('leaves.approve')->middleware(['auth']);
+    Route::post('/disapprove/{id}', [LeaveController::class, 'disapproveLeave'])->name('leaves.disapprove')->middleware(['auth']);
+    Route::get('/leaveDetails/{id}', [LeaveController::class, 'show'])->name('leaveDetails')->middleware(['auth']);
 });
 
 
@@ -97,11 +99,11 @@ Route::get('/view-client/{id}', [ClientController::class, 'show'])->name('view-c
 Route::get('/update-client/{id}', UpdateClient::class)->name('update-employee')->middleware(['auth']);
 
 Route::get('/payroll', Payroll::class)->middleware(['auth']);
-Route::get('/export-payroll/{client}/{type}', [PayrollController::class, 'exportPayroll'])->name('export-payroll');
-Route::get('/view-payroll/{payroll}', [PayrollController::class, 'show'])->name('show-payroll');
-Route::get('/export-payroll/{client}/{type}', [PayrollController::class, 'exportPayroll'])->name('export-payroll');
-Route::post('/change-payroll-status', [PayrollController::class, 'status'])->name('change-payroll-status');
-Route::get('/view-employee-payroll/{employee}/{payroll}/{payslip}', [PayrollController::class, 'viewEmployeePayroll'])->name('viewEmployeePayroll');
+Route::get('/export-payroll/{client}/{type}', [PayrollController::class, 'exportPayroll'])->name('export-payroll')->middleware(['auth']);
+Route::get('/view-payroll/{payroll}', [PayrollController::class, 'show'])->name('show-payroll')->middleware(['auth']);
+Route::get('/export-payroll/{client}/{type}', [PayrollController::class, 'exportPayroll'])->name('export-payroll')->middleware(['auth']);
+Route::post('/change-payroll-status', [PayrollController::class, 'status'])->name('change-payroll-status')->middleware(['auth']);
+Route::get('/view-employee-payroll/{employee}/{payroll}/{payslip}', [PayrollController::class, 'viewEmployeePayroll'])->name('viewEmployeePayroll')->middleware(['auth']);
 
 Route::get('/attendances', Attendances::class)->middleware(['auth']);
 

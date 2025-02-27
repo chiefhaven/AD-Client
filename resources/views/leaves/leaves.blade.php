@@ -3,25 +3,24 @@
 @section('title', 'Leave')
 
 @section('content_header')
-    <h1 class="text-muted">
-        Leave Management
-    </h1>
-    @push('css')
+    @hasSection('content_header_title')
+        <h1 class="text-muted">
+            @yield('content_header_title', 'adminlte')
 
-        <style>
-        #leaveDetail.modal {
-            position: fixed !important;
-        }
-        </style>
-
-
-    @endpush
+            @hasSection('content_header_subtitle')
+                <small class="text-dark">
+                    <i class="fas fa-xs fa-angle-right text-muted"></i>
+                    @yield('content_header_subtitle')
+                </small>
+            @endif
+        </h1>
+    @endif
 @stop
 
 @section('content')
 
-<!-- Vue app container for Leave View component -->
 <div id="app">
+    <livewire:common.page-header pageTitle="Leaves"/>
     <div class="row mb-5">
         <div class="col-md-4">
             <!-- Total Requests Card -->
@@ -58,8 +57,8 @@
         </div>
     </div>
 
-    <div class="row card mt-5 pt-5">
-        <table id="leavesTable" class="table table-bordered table-striped table-vcenter">
+    <div class="row card mt-5 pt-5 p-3">
+        <table id="leavesTable" class="table table-bordered table-striped table-vcenter display nowrap">
             <thead>
                 <tr>
                     <th style="min-width: 12em;">Employee</th>
@@ -173,7 +172,7 @@
                                             <div class="col md-6">
                                                 <div class="card p-2">
                                                    <h5>Employee ID</h5>
-                                                    <p>  @{{ selectedLeave.employee_no }}</p>
+                                                    <p>  @{{ selectedLeave.employee?.employee_no }}</p>
                                                 </div>
                                             </div>
 
@@ -195,13 +194,17 @@
                                                 <p class="card p-2">@{{ selectedLeave.status }}</p>
                                             </div>
                                             <div class="col-md-4">
-                                                <h6>Application Date</h6>
+                                                <h6>Start Date</h6>
                                                 <p class="card p-2"> @{{ selectedLeave.start_date }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <h6>End Date</h6>
+                                                <p class="card p-2"> @{{ selectedLeave.end_date }}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h6>Reason here</h6>
+                                                <h6>Reason</h6>
                                                 <p class="card p-2">@{{ selectedLeave.reason }}</p>
                                             </div>
                                         </div>
