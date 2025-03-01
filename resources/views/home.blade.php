@@ -20,7 +20,7 @@
                                 title="{{ $billingsCount }}"
                                 text="Bills"
                                 theme="light"
-                                icon="fas fa-coins small-icon "
+                                icon="fas fa-coins small-icon"
                                 class="card"
                                 style="border: none"
 
