@@ -34,7 +34,7 @@
                                             <p>Employees</p>
                                         </div>
                                         <div class="icon">
-                                            <i class="fas fa-users"></i>
+                                            <i class="fas fa-users small-icon"></i>
                                         </div>
                                         </div>
                                     </div>
@@ -47,7 +47,7 @@
                                             <p>Total Gross</p>
                                         </div>
                                         <div class="icon">
-                                            <i class="fas fa-money-bill-wave"></i>
+                                            <i class="fas fa-money-bill-wave small-icon"></i>
                                         </div>
                                         </div>
                                     </div>
@@ -60,7 +60,7 @@
                                             <p>Total Net</p>
                                         </div>
                                         <div class="icon">
-                                            <i class="fas fa-dollar-sign"></i>
+                                            <i class="fas fa-dollar-sign small-icon"></i>
                                         </div>
                                         </div>
                                     </div>
@@ -73,7 +73,7 @@
                                             <p>Total Paye</p>
                                         </div>
                                         <div class="icon">
-                                            <i class="fas fa-file-invoice-dollar"></i>
+                                            <i class="fas fa-file-invoice-dollar small-icon"></i>
                                         </div>
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@
                                             <p>Total Deductions</p>
                                         </div>
                                         <div class="icon">
-                                            <i class="fas fa-minus-circle"></i>
+                                            <i class="fas fa-minus-circle small-icon"></i>
                                         </div>
                                         </div>
                                     </div>
@@ -99,7 +99,7 @@
                                             <p>Total Earnings</p>
                                         </div>
                                         <div class="icon">
-                                            <i class="fas fa-plus-circle"></i>
+                                            <i class="fas fa-plus-circle small-icon"></i>
                                         </div>
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@
                                             <p>Total Paid</p>
                                         </div>
                                         <div class="icon">
-                                            <i class="fas fa-check-circle"></i>
+                                            <i class="fas fa-check-circle small-icon"></i>
                                         </div>
                                         </div>
                                     </div>
