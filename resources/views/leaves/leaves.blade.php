@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Pending</h5>
                     <p class="card-text">
-                        @{{ leaves.filter(leave => leave.Status === 'Pending').length }}
+                        @{{ pendingCount}}
                     </p>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Approved</h5>
                     <p class="card-text">
-                        @{{ leaves.filter(leave => leave.Status === 'Approved').length }}
+                        @{{ approvedCount }}
                     </p>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Disapproved</h5>
                     <p class="card-text">
-                        @{{ leaves.filter(leave => leave.Status === 'Disapproved').length }}
+                        @{{ disapprovedCount }}
                     </p>
                 </div>
             </div>
@@ -179,7 +179,7 @@
                                             <div class="col md-6">
                                                 <div class="card p-2">
                                                     <h5>Name</h5>
-                                                    <p>@{{ selectedLeave.employee?.fname }}  @{{ selectedLeave.employee?.mname }} @{{ selectedLeave.employee?.sname }}</p>
+                                                    <p>@{{ selectedLeave.fname }}  @{{ selectedLeave.mname }}  @{{ selectedLeave.sname }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -187,7 +187,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <h6>Leave Type</h6>
-                                                <p class="card p-2">@{{ selectedLeave.leave_type }}</p>
+                                                <p class="card p-2">@{{ selectedLeave.type }}</p>
                                             </div>
                                             <div class="col-md-4">
                                                 <h6>Status</h6>
@@ -252,251 +252,236 @@
 
 @push('js')
     <script>
+const app = createApp({
+    setup() {
+        // Axios CSRF token setup
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute('content');
 
-        const app = createApp({
-            setup() {
-                    // Axios CSRF token setup
-                    axios.defaults.headers.common['X-CSRF-TOKEN'] = document
-                    .querySelector('meta[name="csrf-token"]')
-                    .getAttribute('content');
-
-                const leaves = ref([]);
-                const selectAll = ref(false);
-                const selectedLeave = ref({});
-                const statusCounts = ref({
-                    Approved: 0,
-                    Disapproved: 0,
-                    Pending: 0,
-                });
-
-                const fetchLeaveData = () => {
-                    NProgress.start();
-                    return axios.get(`/leaves/leavesData`)
-                        .then(response => {
-                            console.log(response.data)
-                            leaves.value = response.data;
-                            initializeDataTable();
-                        })
-                        .catch(error => {
-                            console.error('Error fetching leave data:', error);
-                        })
-                        .finally(() => {
-                            NProgress.done();
-                        });
-                };
-
-                // const initializeDataTable = () => {
-                // $('#leaveTable').DataTable().clear().destroy();  // Destroy the previous instance
-                // $('#leaveTable').DataTable();  // Reinitialize the table with the updated data
-                //     }
-
-
-                // const fetchLeaveData = () => {
-                //     // Fetch all leave data
-                // };
-
-                const viewLeaveDetails = (leave) => {
-                    selectedLeave.value = leave; // Update the selected leave
-                    $('#leaveDetail').modal('show'); // Show the modal
-                };
-
-                // $('#leaveDatail').on('hide.bs.modal', () => {
-                const closeModal = () => {
-                    selectedLeave.value = null; // Clear the data when the modal is closed
-                };
-
-
-                // const viewLeaveDetails = (leave) => {
-                // selectedLeave.value = leave; // Set the selected leave details
-                // };
-
-                 const toggleSelectAll = () => {
-                    selectAll.value = !selectAll.value;
-                    leaves.value.forEach(leave => {
-                        leave.selected = selectAll.value;
-                    });
-                };
-
-                const toggleDropdown = (leave) => {
-                    leave.showDropdown = !leave.showDropdown;
-                    leaves.value.forEach((l) => {
-                        if (l.id !== leave.id) l.showDropdown = false;
-                    });
-                };
-
-
-                const getSelectedIds = () => {
-                    return leaves.value.filter(leave => leave.selected).map(leave => leave.id);
-                };
-
-                const processLeaves = (action) => {
-                    const selectedIds = getSelectedIds();
-                    if (selectedIds.length === 0) {
-                        notification('Please select at least one leave request.', 'error');
-                        return;
-                    }
-                    axios.post(`/leaves/${action}`, { ids: selectedIds })
-                        .then(response => {
-                            updateCounts(response.data);
-                            notification(`Mass ${action} successful!`, 'success');
-                            fetchLeaveData();
-                        })
-                        .catch(error => console.error(`Error in ${action}:`, error));
-                };
-
-                // console.log(bootstrap.Modal.VERSION);
-
-
-                const notification = ($text, $icon) =>{
-                    Swal.fire({
-                        toast: true,
-                        position: "top-end",
-                        html: $text,
-                        showConfirmButton: false,
-                        timer: 5500,
-                        timerProgressBar: true,
-                        icon: $icon,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
-                }
-
-                // const massApprove = () => processLeaves('mass-approve');
-                // const massDisapprove = () => processLeaves('mass-disapprove');
-
-
-
-            //     const approveLeave = (id) => {
-            //         NProgress.start();
-            //         axios.post(`{{ route('leaves.approve', '') }}/${id}`)
-            //         .then(response => {
-            //             updateCounts(response.data);
-            //             notification(`Approval successful!`, 'success');
-            //             fetchLeaveData().then(() => {
-            //             initializeDataTable(); // Reinitialize only after content is updated
-            //             });
-            //         })
-            //         .catch(error => {
-            //             console.error('Error approving leave:', error);
-            //         });
-            // };
-
-             const approveLeave = (id) => {
-                axios.post(`{{ route('leaves.approve', '') }}/${id}`)
-                .then(response => {
-                    // Update the counts based on the server response
-                    updateCounts(response.data);
-
-                    // Show a notification that the disapproval was successful
-                    notification(`Approval successful!`, 'success');
-
-                    // Fetch updated leave data and reinitialize the DataTable
-                    fetchLeaveData().then(() => {
-                        initializeDataTable(); // Reinitialize the DataTable with the updated data
-                    });
-                })
-                .catch(error => {
-                    console.error('Error disapproving leave:', error);
-                });
-            };
-
-
-            const disapproveLeave = (id) => {
-
-                return axios.post(`{{ route('leaves.disapprove', '') }}/${id}`)
-                .then(response => {
-                    // Update the counts based on the server response
-                    updateCounts(response.data);
-
-                    // Show a notification that the disapproval was successful
-                    notification(`Disapproval successful!`, 'success');
-
-                    // Fetch updated leave data and reinitialize the DataTable
-                    fetchLeaveData().then(() => {
-                initializeDataTable(); // Reinitialize the DataTable with the updated data
-            });
-
-                })
-                .catch(error => {
-                    console.error('Error disapproving leave:', error);
-                });
-
-            };
-
-
-            const updateCounts = (data) => {
-                                statusCounts.value = {
-                                    Approved: data.approvedRequests,
-                                    Disapproved: data.disapprovedRequests,
-                                    Pending: data.pendingRequests,
-                                };
-                            };
-            // This function updates the counts in the component's state
-// const updateCounts = (counts) => {
-//     // Update the status counts (approved, disapproved, pending)
-//     this.statusCounts = counts;  // Ensure that 'this.statusCounts' is the right variable storing the counts
-// };
-
-
-
-                const initializeDataTable = () => {
-                    try {
-                        // Destroy existing DataTable instance if it exists
-                        if ($.fn.DataTable.isDataTable('#leavesTable')) {
-                            $('#leavesTable').DataTable().clear().destroy();
-                        }
-
-                        // Use Vue's $nextTick to ensure DOM updates are complete
-                        Vue.nextTick(() => {
-                            $('#leavesTable').DataTable({
-                                dom: 'Bfrtip',
-                                buttons: ['copy', 'excel', 'pdf', 'print'],
-                                scrollX: true,
-                                scrollY: true,
-                                paging: true,
-                                pageLength: 10,
-                                lengthMenu: [5, 10, 25, 50],
-                                ordering: true,
-                                autoWidth: false,
-                            });
-
-                        });
-                    } catch (error) {
-                        console.error('Error initializing DataTable:', error);
-                    }
-                };
-
-
-                onMounted(() => {
-                        fetchLeaveData();
-
-                        initializeDataTable();
-                            });
-
-
-                return {
-                    leaves,
-                    selectAll,
-                    statusCounts,
-                    fetchLeaveData,
-                    toggleSelectAll,
-                    toggleDropdown,
-                    getSelectedIds,
-                    // massApprove,
-                    // massDisapprove,
-                    approveLeave,
-                    disapproveLeave,
-                    selectedLeave,
-                    viewLeaveDetails,
-                    closeModal,
-                    initializeDataTable
-                };
-            },
+        const leaves = ref([]);  // Ensures it's an array
+        const selectAll = ref(false);
+        const selectedLeave = ref({}); // Initialized as an object
+        const statusCounts = ref({
+            Approved: 0,
+            Disapproved: 0,
+            Pending: 0,
         });
 
-        app.mount('#app');
-    </script>
+const fetchLeaveData = async () => {
+    NProgress.start();
+    try {
+        const response = await axios.get(`/leaves/leavesData`);
+        console.log("API Response:", response.data); // Debugging
+        if (!Array.isArray(response.data)) {
+            throw new Error("Invalid API response: Expected an array");
+        }
+        leaves.value = response.data;
+        initializeDataTable();
+    } catch (error) {
+        console.error('Error fetching leave data:', error);
+    } finally {
+        NProgress.done();
+    }
+};
+
+
+
+        const pendingCount = computed(() => {
+            return leaves.value.filter(leave => leave.status === 'Pending').length;
+        });
+        const approvedCount = computed(() => {
+            return leaves.value.filter(leave => leave.status === 'Approved').length;
+        });
+        const disapprovedCount = computed(() => {
+            return leaves.value.filter(leave => leave.status === 'Disapproved').length;
+        });
+
+
+
+
+        const viewLeaveDetails = (leave) => {
+            if (leave && leave.employee) {
+                selectedLeave.value = {
+                    ...leave,  // Copy leave details
+                    employee_no: leave.employee.employee_no, // Ensure correct mapping
+                    fname: leave.employee.fname,
+                    mname: leave.employee.mname,
+                    sname: leave.employee.sname
+                };
+                $('#leaveDetail').modal('show');
+            } else {
+                console.error("viewLeaveDetails called with null or invalid leave object.");
+            }
+        };
+
+
+        const closeModal = () => {
+            selectedLeave.value = {}; // Reset to an empty object
+        };
+
+        const toggleSelectAll = () => {
+            selectAll.value = !selectAll.value;
+            leaves.value.forEach(leave => {
+                leave.selected = selectAll.value;
+            });
+        };
+
+        const toggleDropdown = (leave) => {
+            leave.showDropdown = !leave.showDropdown;
+            leaves.value.forEach((l) => {
+                if (l.id !== leave.id) l.showDropdown = false;
+            });
+        };
+
+        const getSelectedIds = () => {
+            return leaves.value.filter(leave => leave.selected).map(leave => leave.id);
+        };
+
+        const processLeaves = (action) => {
+            const selectedIds = getSelectedIds();
+            if (selectedIds.length === 0) {
+                notification('Please select at least one leave request.', 'error');
+                return;
+            }
+            axios.post(`/leaves/${action}`, { ids: selectedIds })
+                .then(response => {
+                    updateCounts(response.data);
+                    notification(`Mass ${action} successful!`, 'success');
+                    fetchLeaveData();
+                })
+                .catch(error => console.error(`Error in ${action}:`, error));
+        };
+
+        const notification = ($text, $icon) => {
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                html: $text,
+                showConfirmButton: false,
+                timer: 5500,
+                timerProgressBar: true,
+                icon: $icon,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+        };
+
+ const approveLeave = async (id) => {
+    try {
+        const response = await axios.post(`{{ route('leaves.approve', '') }}/${id}`);
+        updateCounts(response.data);
+        notification(`Approval successful!`, 'success');
+
+        // Reload only the DataTable's data without reinitialization
+        $('#leavesTable').DataTable().ajax.reload(null, false);
+    } catch (error) {
+        console.error('Error approving leave:', error);
+    }
+};
+
+const disapproveLeave = async (id) => {
+    try {
+        const response = await axios.post(`{{ route('leaves.disapprove', '') }}/${id}`);
+        updateCounts(response.data);
+        notification(`Disapproval successful!`, 'success');
+
+        // Reload only the DataTable's data without reinitialization
+        $('#leavesTable').DataTable().ajax.reload(null, false);
+    } catch (error) {
+        console.error('Error disapproving leave:', error);
+    }
+};
+
+
+
+
+
+        const updateCounts = (data) => {
+            statusCounts.value = {
+                Approved: data.approvedRequests || 0,
+                Disapproved: data.disapprovedRequests || 0,
+                Pending: data.pendingRequests || 0,
+            };
+        };
+
+
+  const initializeDataTable = () => {
+    try {
+        let table = $('#leavesTable').DataTable();
+        if (table) {
+            table.clear().destroy(); // Ensure only one instance exists
+        }
+
+        Vue.nextTick(() => {
+            $('#leavesTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: ['copy', 'excel', 'pdf', 'print'],
+                scrollX: true,
+                scrollY: true,
+                paging: true,
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
+                ordering: true,
+                autoWidth: false,
+                ajax: {
+                    url: "{{ route('leaves') }}",
+                    type: "GET",
+                    dataSrc: ""
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'employee_name' },
+                    { data: 'leave_type' },
+                    { data: 'status' },
+                    { data: 'actions' }
+                ],
+                initComplete: function() {
+                    console.log("DataTable initialized successfully.");
+                }
+            });
+        });
+    } catch (error) {
+        console.error('Error initializing DataTable:', error);
+    }
+};
+
+
+
+
+
+        onMounted(() => {
+            fetchLeaveData();
+            // initializeDataTable();
+        });
+
+        return {
+            leaves,
+            selectAll,
+            statusCounts,
+            fetchLeaveData,
+            toggleSelectAll,
+            toggleDropdown,
+            getSelectedIds,
+            approveLeave,
+            disapproveLeave,
+            selectedLeave,
+            viewLeaveDetails,
+            closeModal,
+            initializeDataTable,
+            pendingCount,
+            approvedCount,
+            disapprovedCount
+
+
+        };
+    },
+});
+
+app.mount('#app');
+</script>
+
 @endpush
 
