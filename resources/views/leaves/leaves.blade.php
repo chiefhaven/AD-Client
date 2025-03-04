@@ -1,6 +1,8 @@
 @section('title', 'Leave')
 
 @section('content_header')
+
+
     @hasSection('content_header_title')
         <h1 class="text-muted">
             @yield('content_header_title', 'adminlte')
@@ -17,8 +19,8 @@
 
 @section('content')
 
-<div id="app">
-    <livewire:common.page-header pageTitle="Leaves"/>
+<div v-cloak id="app">
+    {{-- <livewire:common.page-header pageTitle="Leaves"/> --}}
     <div class="row mb-5">
         <div class="col-md-4">
             <!-- Total Requests Card -->
@@ -56,7 +58,7 @@
     </div>
 
     <div class="row card mt-5 pt-5 p-3">
-        <table id="leavesTable" class="table table-bordered table-striped table-vcenter display nowrap">
+        <table id="leavesTable"  class="table table-bordered table-striped table-vcenter display nowrap">
             <thead>
                 <tr>
                     <th style="min-width: 12em;">Employee</th>
@@ -222,10 +224,8 @@
         </div>
     </div>
 </div>
-
-
-
 </div>
+
 {{-- @include('leaves.leaveDetail') --}}
 @endsection
 
@@ -249,6 +249,9 @@
 @endpush --}}
 
 @push('js')
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+
 <script>
 const app = createApp({
     setup() {
@@ -354,8 +357,9 @@ const app = createApp({
             }
         };
 
-        onMounted(() => {
-            fetchLeaveData();
+         onMounted(async () => {
+            await fetchLeaveData(); // Ensure data is fetched first
+            initializeDataTable();  // Then initialize DataTables
         });
 
         return {
