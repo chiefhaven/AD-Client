@@ -45,15 +45,15 @@ class HomeController extends Controller
             ->orderBy('month', 'ASC')
             ->get();
 
-        $billingsCount = Billing::where('client_id', Auth::user()->client_id)->get()->count();
+        $billingsCount = Billing::where('client_id', Auth::user()->client_id)->where('status', )->get()->count();
 
-        $employees = Employee::with('leave')->where('client_id', Auth::user()->client_id)->get();
+        $employees = Employee::with('leave')->where('client_id', Auth::user()->client_id)->where('status', 'active')->get();
 
         $employeesCount = $employees->count();
 
-        $payrollCount = Payroll::where('client_id', Auth::user()->client_id)->get()->count();
+        $payrollCount = Payroll::where('client_id', Auth::user()->client_id)->where('status', '!=', 'approved')->get()->count();
 
-        $leaveCount = $employees->pluck('leave')->flatten()->count();
+        $leaveCount = $employees->pluck('leave')->where('status', 'pending')->flatten()->count();
 
         $client = client::find(Auth::user()->client_id);
 
