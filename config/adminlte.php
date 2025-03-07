@@ -328,10 +328,25 @@ return [
             'icon' => 'fa fa-fw fa-coins',
 
         ],
+        
+        [
+            'text' => 'Payrolls',
+            'url' => '/payrolls',
+            'icon' => 'fa fas fa-receipt small-icons',
+
+        ],
+
         [
             'text' => 'Leaves',
             'url' => '/leaves',
             'icon' => 'fa fa-fw fa-sign-out-alt',
+
+        ],
+
+        [
+            'text' => 'Employees',
+            'url' => '/employees',
+            'icon' => 'fa fa-users small-icons',
 
         ],
         [

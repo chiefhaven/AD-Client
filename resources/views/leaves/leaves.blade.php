@@ -18,7 +18,6 @@
 @stop
 
 @section('content')
-
 <div v-cloak id="app">
     {{-- <livewire:common.page-header pageTitle="Leaves"/> --}}
     <div class="row mb-5">

@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="col-md-12 p-5">
         <h2>Welcome <strong>{{ $client->client_name }}</strong></h2>
-    </div>
+    </div> 
 @stop
 
 @section('content')

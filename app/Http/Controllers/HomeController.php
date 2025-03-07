@@ -45,7 +45,7 @@ class HomeController extends Controller
             ->orderBy('month', 'ASC')
             ->get();
 
-        $billingsCount = Billing::where('client_id', Auth::user()->client_id)->where('status', )->get()->count();
+        $billingsCount = Billing::where('client_id', Auth::user()->client_id)->where('status','pending' )->get()->count();
 
         $employees = Employee::with('leave')->where('client_id', Auth::user()->client_id)->where('status', 'active')->get();
 

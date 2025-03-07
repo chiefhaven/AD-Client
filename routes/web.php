@@ -23,12 +23,12 @@ use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\SettingsController;
 
+use App\Http\Controllers\PDFController;
+
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth']);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth']);
-
-// Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index')->middleware(['auth']);
 
 Route::get('/employees', [EmployeeController::class, 'index'])->name('employees')->middleware(['auth']);
 
@@ -47,30 +47,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-//Leave routes
-// Route::get('/leave', [LeaveController::class, 'index'])->name('leaveView');
-// Route::get('/leave/{year}/{month}', [LeaveController::class, 'leaveView'])->name('leaveView');
-// Route::post('/leaves/{year}/{month}/mass-approve', [LeaveController::class, 'massApprove'])->name('leaves.massApprove');
-// Route::post('/leaves/{year}/{month}/mass-disapprove', [LeaveController::class, 'massDisapprove'])->name('leaves.massDisapprove');
-
-
-// Route::get('/leave/{year?}/{month?}', [LeaveController::class, 'index'])->name('leaveView'); // Blade and Vue API data
-// Route::post('/leave/{year}/{month}/mass-approve', [LeaveController::class, 'massApprove'])->name('massApprove');
-// Route::post('/leave/{year}/{month}/mass-disapprove', [LeaveController::class, 'massDisapprove'])->name('massDisapprove');
-
-// Route::get('/leave/{year?}/{month?}', [LeaveController::class, 'index']);
-// Route::get('leaves/leaveView', [LeaveController::class, 'index'])->name('leaveView');
-
-// Route::post('/leave/{year}/{month}/mass-approve', [LeaveController::class, 'massApprove'])->name('massApprove');
-// Route::post('/leave/{year}/{month}/mass-disapprove', [LeaveController::class, 'massDisapprove'])->name('massDisapprove');
-
-// Route::post('/leaveView/mass-approve', [LeaveController::class, 'massApprove'])->name('massApprove');
-// Route::post('/leaveView/mass-disapprove', [LeaveController::class, 'massDisapprove'])->name('massDisapprove');
-
-// Route::post('/leave/approve/{id}', [LeaveController::class, 'approve'])->name('leave.approve');
-// Route::post('/leave/disapprove/{id}', [LeaveController::class, 'disapprove'])->name('leave.disapprove');
-
-
 
 Route::prefix('leaves')->group(function () {
     Route::get('/', [LeaveController::class, 'index'])->name('leaves')->middleware(['auth']);
@@ -82,7 +58,7 @@ Route::prefix('leaves')->group(function () {
     Route::get('/leaveDetails/{id}', [LeaveController::class, 'show'])->name('leaveDetails')->middleware(['auth']);
 });
 
- 
+
 
 
 
@@ -118,3 +94,7 @@ Route::get('/users', UserList::class)->middleware(['auth']);
 Route::get('/add-user', AddUser::class)->middleware(['auth']);
 
 Route::get('/settings', [SettingsController::class, 'index'])->middleware(['auth'])->name('settings');
+
+
+//PDF ROUTES
+Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
