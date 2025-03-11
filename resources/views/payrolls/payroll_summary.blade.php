@@ -377,7 +377,22 @@
                     toast.onmouseleave = Swal.resumeTimer;
                   }
               });
+
+               const employeePayslip = (employeeId, payrollId) => {
+            if (!employeeId || !payrollId) {
+                console.error("Missing required parameters for payslip download.");
+                return;
+            }
+
+            // Open the Laravel payslip route in a new tab
+            const url = `/payslip/download/${employeeId}/${payrollId}`;
+            window.open(url, '_blank');
+        };
+        
         }
+
+
+
 
         return {
             showPayrollModal,
@@ -404,6 +419,7 @@
             closeAddPayrollModal,
             openAddPayrollModal,
             showAddPayrollModal,
+            employeePayslip
         };
       },
     });

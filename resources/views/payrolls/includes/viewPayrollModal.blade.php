@@ -214,7 +214,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-default" @click="employeePayslip(employeeData.employees[0].id, employeeData.employees[0].pivot.payroll_id, 1)">Dowload Payslip</button>
+            <button type="button" class="btn btn-default" @click="employeePayslip(employeeData.employees[0].id, employeeData.employees[0].pivot.payroll_id, 1)">Download Payslip</button>
             <button type="button" class="btn btn-default" @click="closeEmployeePayModal">Close</button>
             </div>
         </div>

@@ -1,6 +1,7 @@
 <style>
 @page {
-    margin: 30px 0 0 0;
+    size: A4 portrait;
+    margin: 10mm;
 }
 
 .page-break {
@@ -14,7 +15,13 @@
 p{
     line-height: 1.4 !important;
 }
-
+.heading{
+    text-align: center;
+    margin: 20px;
+}
+.employee-details{
+    margin-bottom:20px;
+}
 body {
     color: #000000;
     background: #FFFFFF;
@@ -39,13 +46,100 @@ h1 {
     margin: 0;
 }
 
-table {
+/* table {
     width: 100%;
     border-spacing: 0;
-    margin-bottom: 20px;
+    margin: 20px;
     overflow: visible;
     border-collapse: collapse;
+    border:10px;
+} */
+
+.payslip-header {
+    text-align: center;
+    margin-bottom: 15px;
 }
+
+.payslip-header .title {
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+    }
+
+    .payslip-header p {
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .employee-details {
+        width: 60%;
+        margin: auto;
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .employee-details p {
+        margin: 5px 0;
+    }
+
+    .employee-details strong {
+        display: inline-block;
+        width: 150px; /* Keeps labels aligned */
+}
+
+    .payslip-footer {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 12px;
+        color: #555;
+        border-top: 1px solid #000;
+        padding-top: 5px;
+        width: 100%;
+    }
+
+    .payslip-footer a {
+        color: #0073e6;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .payslip-footer a:hover {
+        text-decoration: underline;
+    }
+
+
+.payslip-table {
+    width: 70%; /* Adjusts width to not span full A4 width */
+    margin: auto; /* Centers the table */
+    font-size: 12px;
+    border-collapse: collapse;
+}
+.payslip-table th, .payslip-table td {
+    padding: 8px;
+    text-align: left;
+
+}
+.payslip-table thead {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    text-align: center;
+    }
+
+.payslip-table .amount {
+    text-align: right;
+    }
+
+.total-row {
+    background-color: #e0e0e0;
+    font-weight: bold;
+}
+
+
+
 
 th, .section-header {
     padding: 5px 10px;
@@ -877,13 +971,13 @@ havenCrredit {
     --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
-  
+
   *,
   *::before,
   *::after {
     box-sizing: border-box;
   }
-  
+
   html {
     font-family: sans-serif;
     line-height: 1.15;
@@ -892,15 +986,15 @@ havenCrredit {
     -ms-overflow-style: scrollbar;
     -webkit-tap-highlight-color: transparent;
   }
-  
+
   @-ms-viewport {
     width: device-width;
   }
-  
+
   article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, section {
     display: block;
   }
-  
+
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -911,27 +1005,27 @@ havenCrredit {
     text-align: left;
     background-color: #fff;
   }
-  
+
   [tabindex="-1"]:focus {
     outline: 0 !important;
   }
-  
+
   hr {
     box-sizing: content-box;
     height: 0;
     overflow: visible;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
     margin-bottom: 0.5rem;
   }
-  
+
   p {
     margin-top: 0;
     margin-bottom: 1rem;
   }
-  
+
   abbr[title],
   abbr[data-original-title] {
     text-decoration: underline;
@@ -940,53 +1034,53 @@ havenCrredit {
     cursor: help;
     border-bottom: 0;
   }
-  
+
   address {
     margin-bottom: 1rem;
     font-style: normal;
     line-height: inherit;
   }
-  
+
   ol,
   ul,
   dl {
     margin-top: 0;
     margin-bottom: 1rem;
   }
-  
+
   ol ol,
   ul ul,
   ol ul,
   ul ol {
     margin-bottom: 0;
   }
-  
+
   dt {
     font-weight: 700;
   }
-  
+
   dd {
     margin-bottom: .5rem;
     margin-left: 0;
   }
-  
+
   blockquote {
     margin: 0 0 1rem;
   }
-  
+
   dfn {
     font-style: italic;
   }
-  
+
   b,
   strong {
     font-weight: bolder;
   }
-  
+
   small {
     font-size: 80%;
   }
-  
+
   sub,
   sup {
     position: relative;
@@ -994,41 +1088,41 @@ havenCrredit {
     line-height: 0;
     vertical-align: baseline;
   }
-  
+
   sub {
     bottom: -.25em;
   }
-  
+
   sup {
     top: -.5em;
   }
-  
+
   a {
     color: #007bff;
     text-decoration: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
   }
-  
+
   a:hover {
     color: #0056b3;
     text-decoration: underline;
   }
-  
+
   a:not([href]):not([tabindex]) {
     color: inherit;
     text-decoration: none;
   }
-  
+
   a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus {
     color: inherit;
     text-decoration: none;
   }
-  
+
   a:not([href]):not([tabindex]):focus {
     outline: 0;
   }
-  
+
   pre,
   code,
   kbd,
@@ -1036,31 +1130,31 @@ havenCrredit {
     font-family: monospace, monospace;
     font-size: 1em;
   }
-  
+
   pre {
     margin-top: 0;
     margin-bottom: 1rem;
     overflow: auto;
     -ms-overflow-style: scrollbar;
   }
-  
+
   figure {
     margin: 0 0 1rem;
   }
-  
+
   img {
     vertical-align: middle;
     border-style: none;
   }
-  
+
   svg:not(:root) {
     overflow: hidden;
   }
-  
+
   table {
     border-collapse: collapse;
   }
-  
+
   caption {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
@@ -1068,25 +1162,25 @@ havenCrredit {
     text-align: left;
     caption-side: bottom;
   }
-  
+
   th {
     text-align: inherit;
   }
-  
+
   label {
     display: inline-block;
     margin-bottom: .5rem;
   }
-  
+
   button {
     border-radius: 0;
   }
-  
+
   button:focus {
     outline: 1px dotted;
     outline: 5px auto -webkit-focus-ring-color;
   }
-  
+
   input,
   button,
   select,
@@ -1097,24 +1191,24 @@ havenCrredit {
     font-size: inherit;
     line-height: inherit;
   }
-  
+
   button,
   input {
     overflow: visible;
   }
-  
+
   button,
   select {
     text-transform: none;
   }
-  
+
   button,
   html [type="button"],
   [type="reset"],
   [type="submit"] {
     -webkit-appearance: button;
   }
-  
+
   button::-moz-focus-inner,
   [type="button"]::-moz-focus-inner,
   [type="reset"]::-moz-focus-inner,
@@ -1122,32 +1216,32 @@ havenCrredit {
     padding: 0;
     border-style: none;
   }
-  
+
   input[type="radio"],
   input[type="checkbox"] {
     box-sizing: border-box;
     padding: 0;
   }
-  
+
   input[type="date"],
   input[type="time"],
   input[type="datetime-local"],
   input[type="month"] {
     -webkit-appearance: listbox;
   }
-  
+
   textarea {
     overflow: auto;
     resize: vertical;
   }
-  
+
   fieldset {
     min-width: 0;
     padding: 0;
     margin: 0;
     border: 0;
   }
-  
+
   legend {
     display: block;
     width: 100%;
@@ -1159,48 +1253,48 @@ havenCrredit {
     color: inherit;
     white-space: normal;
   }
-  
+
   progress {
     vertical-align: baseline;
   }
-  
+
   [type="number"]::-webkit-inner-spin-button,
   [type="number"]::-webkit-outer-spin-button {
     height: auto;
   }
-  
+
   [type="search"] {
     outline-offset: -2px;
     -webkit-appearance: none;
   }
-  
+
   [type="search"]::-webkit-search-cancel-button,
   [type="search"]::-webkit-search-decoration {
     -webkit-appearance: none;
   }
-  
+
   ::-webkit-file-upload-button {
     font: inherit;
     -webkit-appearance: button;
   }
-  
+
   output {
     display: inline-block;
   }
-  
+
   summary {
     display: list-item;
     cursor: pointer;
   }
-  
+
   template {
     display: none;
   }
-  
+
   [hidden] {
     display: none !important;
   }
-  
+
   h1, h2, h3, h4, h5, h6,
   .h1, .h2, .h3, .h4, .h5, .h6 {
     margin-bottom: 0.5rem;
@@ -1209,122 +1303,122 @@ havenCrredit {
     line-height: 1.2;
     color: inherit;
   }
-  
+
   h1, .h1 {
     font-size: 2.5rem;
   }
-  
+
   h2, .h2 {
     font-size: 2rem;
   }
-  
+
   h3, .h3 {
     font-size: 1.75rem;
   }
-  
+
   h4, .h4 {
     font-size: 1.5rem;
   }
-  
+
   h5, .h5 {
     font-size: 1.25rem;
   }
-  
+
   h6, .h6 {
     font-size: 1rem;
   }
-  
+
   .lead {
     font-size: 1.25rem;
     font-weight: 300;
   }
-  
+
   .display-1 {
     font-size: 6rem;
     font-weight: 300;
     line-height: 1.2;
   }
-  
+
   .display-2 {
     font-size: 5.5rem;
     font-weight: 300;
     line-height: 1.2;
   }
-  
+
   .display-3 {
     font-size: 4.5rem;
     font-weight: 300;
     line-height: 1.2;
   }
-  
+
   .display-4 {
     font-size: 3.5rem;
     font-weight: 300;
     line-height: 1.2;
   }
-  
+
   hr {
     margin-top: 1rem;
     margin-bottom: 1rem;
     border: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
-  
+
   small,
   .small {
     font-size: 80%;
     font-weight: 400;
   }
-  
+
   mark,
   .mark {
     padding: 0.2em;
     background-color: #fcf8e3;
   }
-  
+
   .list-unstyled {
     padding-left: 0;
     list-style: none;
   }
-  
+
   .list-inline {
     padding-left: 0;
     list-style: none;
   }
-  
+
   .list-inline-item {
     display: inline-block;
   }
-  
+
   .list-inline-item:not(:last-child) {
     margin-right: 0.5rem;
   }
-  
+
   .initialism {
     font-size: 90%;
     text-transform: uppercase;
   }
-  
+
   .blockquote {
     margin-bottom: 1rem;
     font-size: 1.25rem;
   }
-  
+
   .blockquote-footer {
     display: block;
     font-size: 80%;
     color: #6c757d;
   }
-  
+
   .blockquote-footer::before {
     content: "\2014 \00A0";
   }
-  
+
   .img-fluid {
     max-width: 100%;
     height: auto;
   }
-  
+
   .img-thumbnail {
     padding: 0.25rem;
     background-color: #fff;
@@ -1333,38 +1427,38 @@ havenCrredit {
     max-width: 100%;
     height: auto;
   }
-  
+
   .figure {
     display: inline-block;
   }
-  
+
   .figure-img {
     margin-bottom: 0.5rem;
     line-height: 1;
   }
-  
+
   .figure-caption {
     font-size: 90%;
     color: #6c757d;
   }
-  
+
   code,
   kbd,
   pre,
   samp {
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
-  
+
   code {
     font-size: 87.5%;
     color: #e83e8c;
     word-break: break-word;
   }
-  
+
   a > code {
     color: inherit;
   }
-  
+
   kbd {
     padding: 0.2rem 0.4rem;
     font-size: 87.5%;
@@ -1372,30 +1466,30 @@ havenCrredit {
     background-color: #212529;
     border-radius: 0.2rem;
   }
-  
+
   kbd kbd {
     padding: 0;
     font-size: 100%;
     font-weight: 700;
   }
-  
+
   pre {
     display: block;
     font-size: 87.5%;
     color: #212529;
   }
-  
+
   pre code {
     font-size: inherit;
     color: inherit;
     word-break: normal;
   }
-  
+
   .pre-scrollable {
     max-height: 340px;
     overflow-y: scroll;
   }
-  
+
   .container {
     width: 100%;
     padding-right: 15px;

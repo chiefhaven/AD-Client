@@ -24,6 +24,8 @@ use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\SettingsController;
 
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\PayslipController;
+
 
 Auth::routes();
 
@@ -97,4 +99,5 @@ Route::get('/settings', [SettingsController::class, 'index'])->middleware(['auth
 
 
 //PDF ROUTES
-Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
+// Route::get('/generate-pdf', [App\Http\Controllers\PDFController::class, 'generatePDF']);
+Route::get('/payslip/download/{employeeId}/{payrollId}', [PayslipController::class, 'downloadPayslip'])->name('payslip.download');

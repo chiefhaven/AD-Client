@@ -94,8 +94,8 @@ public function index(Request $request)
         if ($employeePayroll) {
             if ($payslip == '1') {
                 // Implement PDF export logic here (using a package like DomPDF)
-                $pdf = PDF::loadView('pdf.employeePayroll', ['employeePayroll' => $employeePayroll]);
-                return $pdf->download($employeePayroll->employees[0]->fname . ' ' . $employeePayroll->employees[0]->sname . '.pdf');
+                $pdf = PDF::loadView('pdf.employeePayroll', ['employeePayroll' => $employeePayroll]) ->setPaper('a4', 'portrait');
+                return $pdf->download('Payslip'. ' ' . $employeePayroll->employees[0]->fname . ' ' . $employeePayroll->employees[0]->sname . '.pdf');
             } else {
                 return response()->json([$employeePayroll], 200);
             }
