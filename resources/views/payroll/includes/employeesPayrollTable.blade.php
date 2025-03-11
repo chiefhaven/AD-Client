@@ -56,7 +56,7 @@
                               <button type="button" @click.stop="employeePayslip(employee.id, '{{ $payroll->id }}', 1)"
                                   class="dropdown-item nav-main-link">
                                   <i class="fa fa-download me-2"></i>
-                                  <span class="ml-1">Dounload payslip</span>
+                                  <span class="ml-1">Download payslip</span>
                               </button>
                           </div>
                       </div>
