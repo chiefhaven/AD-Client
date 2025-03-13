@@ -55,37 +55,38 @@ h1 {
     border:10px;
 } */
 
+/* payslip starts here */
 .payslip-header {
     text-align: center;
     margin-bottom: 15px;
 }
 
 .payslip-header .title {
-        font-size: 18px;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin-bottom: 5px;
-    }
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
 
-    .payslip-header p {
-        font-size: 14px;
-        margin: 0;
-    }
+.payslip-header p {
+    font-size: 14px;
+    margin: 0;
+}
 
-    .employee-details {
-        width: 60%;
-        margin: auto;
-        padding: 10px;
-        font-size: 12px;
-    }
+.employee-details {
+    width: 60%;
+    margin: auto;
+    padding: 10px;
+    font-size: 12px;
+}
 
-    .employee-details p {
-        margin: 5px 0;
-    }
+.employee-details p {
+    margin: 5px 0;
+}
 
-    .employee-details strong {
-        display: inline-block;
-        width: 150px; /* Keeps labels aligned */
+.employee-details strong {
+    display: inline-block;
+    width: 150px; /* Keeps labels aligned */
 }
 
     .payslip-footer {
@@ -108,15 +109,23 @@ h1 {
     }
 
     .payslip-footer a:hover {
-        text-decoration: underline;
-    }
+    text-decoration: underline;
+}
 
 
-.payslip-table {
-    width: 70%; /* Adjusts width to not span full A4 width */
-    margin: auto; /* Centers the table */
+.table {
+    width: 70%;
+    margin: auto;
     font-size: 12px;
     border-collapse: collapse;
+}
+.top-table-invoice{
+    width: 70%;
+    margin: auto;
+    font-size: 12px;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+
 }
 .payslip-table th, .payslip-table td {
     padding: 8px;
@@ -139,11 +148,32 @@ h1 {
 }
 
 
+/* payslip ends here */
+.heading{
+    text-align: center;
+}
+.address{
+
+    text-align: left;  /* Aligns all <p> inside <td> to the left */
+    margin-left: 5px;
+
+}
+
+.table-invoice {
+    display: flex;
+    justify-content: space-between; /* Evenly distribute columns */
+    gap: 20px; /* Adjust spacing between columns */
+}
+
+.table-invoice div {
+    flex: 1; /* Make all columns equal width */
+    text-align: center; /* Center the text in each column */
+}
 
 
 th, .section-header {
     padding: 5px 10px;
-    color: ;
+    color: #b3b3b3 ;
     white-space: nowrap;
     font-weight: normal;
 }

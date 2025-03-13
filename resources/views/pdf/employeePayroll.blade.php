@@ -23,31 +23,13 @@
     <p><strong>Position:</strong> {{ $employeePayroll->employees[0]->position }}</p>
 </div>
 
-                {{-- <table class="table" >
-                    <tr>
-                        <td>
-
-
-                        </td>
-                         <td class="amount">
-                            <strong>Company/Organisation</strong><br>
-                            {{ $employeePayroll->client->client_name ?? 'N/A' }}<br>
-                            {{ $employeePayroll->client->street_address ?? 'N/A' }}<br>
-                            {{ $employeePayroll->client->city ?? 'N/A' }}<br>
-                            {{ $employeePayroll->client->country_id ?? 'N/A' }}<br>
-                            {{ $employeePayroll->client->phone ?? 'N/A' }}<br>
-                            {{ $employeePayroll->client->user->email ?? 'N/A' }}
-                        </td>
-                    </tr>
-                </table>
-            </div> --}}
-            <table class="payslip-table">
-    <thead>
-        <tr>
-            <th class="text-center">Item</th>
-            <th class="text-center">Amount (K)</th>
-        </tr>
-    </thead>
+<table class="table">
+        <thead>
+            <tr>
+                <th class="text-center">Item</th>
+                <th class="text-center">Amount (K)</th>
+            </tr>
+        </thead>
     <tbody>
         <tr>
             <td>Gross Pay</td>

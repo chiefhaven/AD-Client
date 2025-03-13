@@ -11,7 +11,7 @@
             </div>
                 @include('billings.includes.billDetails')
             <div class="modal-footer">
-            <button type="button" class="btn btn-default" @click="printBill(billData.id)">Print</button>
+            <button type="button" class="btn btn-default" @click="printBill(billData.id)">Download</button>
             <button type="button" class="btn btn-default" @click="closeForm">Cancel</button>
             </div>
         </div>
