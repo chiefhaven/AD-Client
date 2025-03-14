@@ -147,6 +147,25 @@ h1 {
     font-weight: bold;
 }
 
+.invoice-status-details{
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    margin: 4px;
+    padding:4px;
+}
+
+.watermark-text {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    font-weight: bold;
+    color: rgba(150, 150, 150, 0.1); /* Light transparency */
+    pointer-events: none; /* Prevent interaction */
+    z-index: 9999;
+}
+
 
 /* payslip ends here */
 .heading{

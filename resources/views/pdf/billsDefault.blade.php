@@ -8,6 +8,9 @@
         <div >
 
             <div>
+                <div class="watermark-text"><strong>
+                                {{ $bill->client->client_name }}</strong></div>
+
                 <h2 class="heading">Invoice</h2>
                 <table class="top-table-invoice">
                     <thead>
@@ -42,8 +45,8 @@
                             </td>
 
                             <td>
-                                <p>
-                                    {{ $bill->invoice_number }}<br>
+                                <p class="invoice-status-details">
+                                    INV-{{ $bill->invoice_number }}<br>
                                     {{ $bill->bill_status }}<br>
                                     Status: <br>
 
