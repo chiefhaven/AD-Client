@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payroll;
+use App\Events\PayrollStatusUpdated;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -115,6 +116,9 @@ public function index(Request $request)
         // Update the status
         $payrollRecord->status = $post['status']; // Adjust this based on your actual field
         $payrollRecord->save();
+
+         // Dispatch an event to notify relevant users
+        event(new PayrollStatusUpdated($payrollRecord));
 
         // Return a response
         return response()->json([

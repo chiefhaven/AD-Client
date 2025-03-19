@@ -5,7 +5,7 @@
 
 @section('title')
     {{ config('adminlte.title') }}
-    @hasSection('subtitle') | @yield('subtitle') @endif 
+    @hasSection('subtitle') | @yield('subtitle') @endif
 @stop
 
 {{-- Including DataTables CSS --}}
@@ -37,6 +37,9 @@
 
 @section('content')
     @yield('content_body')
+
+    @livewire('notifications')
+
 
     {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
 @stop
